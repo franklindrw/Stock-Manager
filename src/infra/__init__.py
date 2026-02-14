@@ -1,3 +1,3 @@
-from .database import Base, ProductsModel, StoresModel, InventoryMovementModel, InventoryBalanceModel
+from .database import DBConnection
 
-__all__ = ["Base", "ProductsModel", "StoresModel", "InventoryMovementModel", "InventoryBalanceModel"]
+__all__ = ["DBConnection"]

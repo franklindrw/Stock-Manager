@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from sqlalchemy import text
-from src.infra.config import DBConnection
+from src.infra import DBConnection
 
 from src.controllers import products_router
 
