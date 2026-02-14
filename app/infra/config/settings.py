@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    # Tipagem clara e validação
+    # Tipagem clara e validacao
     DB_USERNAME: str
     DB_PASSWORD: str
     DB_HOST: str
@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     @property
     def db_url(self) -> str:
-        # Gera a URL de conexão
+        # Gera a URL de conexao
         return f"postgresql+psycopg://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.POSTGRES_DB}"
 
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")

@@ -60,16 +60,16 @@ def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
-    
+
     db_url = os.getenv("DATABASE_URL")
-    
-    # Sobrescreve a URL do alembic.ini com a variável de ambiente se existir
+
+    # Sobrescreve a URL do alembic.ini com a variavel de ambiente se existir
     if db_url:
         # Converte postgresql:// para postgresql+psycopg:// (driver psycopg3)
         if db_url.startswith("postgresql://"):
             db_url = db_url.replace("postgresql://", "postgresql+psycopg://", 1)
         config.set_main_option("sqlalchemy.url", db_url)
-    
+
     connectable = engine_from_config(
         config.get_section(config.config_ini_section, {}),
         prefix="sqlalchemy.",
