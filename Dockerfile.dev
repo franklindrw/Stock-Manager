@@ -4,6 +4,7 @@ WORKDIR /app
 
 # instalando dependências
 RUN apt-get update && apt-get install -y \
+    git \
     libaio1 \
     libnsl2 \
     && rm -rf /var/lib/apt/lists/*
