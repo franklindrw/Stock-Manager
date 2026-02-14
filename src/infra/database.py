@@ -1,7 +1,7 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+
 
 class Settings(BaseSettings):
     DB_USERNAME: str
@@ -14,7 +14,10 @@ class Settings(BaseSettings):
     def db_url(self) -> str:
         return f"postgresql+psycopg://{self.DB_USERNAME}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.POSTGRES_DB}"
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
+    model_config = SettingsConfigDict(
+        env_file=".env", env_file_encoding="utf-8", extra="ignore"
+    )
+
 
 class DBConnection:
     __engine = None
@@ -28,13 +31,11 @@ class DBConnection:
                 pool_pre_ping=True,
                 max_overflow=20,
                 pool_timeout=30,
-                pool_recycle=1800
+                pool_recycle=1800,
             )
 
         self.session_maker = sessionmaker(
-            bind=DBConnection.__engine,
-            autocommit=False,
-            autoflush=False
+            bind=DBConnection.__engine, autocommit=False, autoflush=False
         )
         self.session = None
 
