@@ -6,6 +6,11 @@ services:
       POSTGRES_USER: ${DB_USERNAME:-postgres}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
       POSTGRES_DB: ${POSTGRES_DB:-stockmanager}
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     ports:
       - "5432:5432"
     volumes:
@@ -15,6 +20,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - db_network
+    restart:
+      always
 
   app:
     container_name: stockmanager-api
@@ -32,8 +41,20 @@ services:
       DB_HOST: db
       DB_PORT: ${DB_PORT:-5432}
       POSTGRES_DB: ${POSTGRES_DB:-stockmanager}
-      DATABASE_URL: "postgresql://${DB_USERNAME:-postgres}:${DB_PASSWORD:-postgres}@db:${DB_PORT:-5432}/${POSTGRES_DB:-stockmanager}"
+      DATABASE_URL: "postgresql://${DB_USERNAME:-postgres}:${DB_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-stockmanager}"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.3'
+          memory: 512M
     volumes:
       - .:/app
+    networks:
+      - db_network
+
 volumes:
   postgres_data:
+
+networks:
+  db_network:
+    driver: bridge
