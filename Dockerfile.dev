@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     git \
     libaio1 \
     libnsl2 \
+    dos2unix \
     && rm -rf /var/lib/apt/lists/*
 
 # copiando o uv para o estágio final
@@ -20,7 +21,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PATH="/app/.venv/bin:$PATH"
 
 # converte line endings do Windows (CRLF) para Unix (LF) e garante permissão de execução
-RUN chmod +x /app/entrypoint.sh
+# IMPORTANTE: Deve ser executado APÓS todos os COPY para garantir que as permissões não sejam sobrescritas
+RUN dos2unix /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
 # usa caminho absoluto para evitar problemas de permissão
 ENTRYPOINT ["/app/entrypoint.sh"]

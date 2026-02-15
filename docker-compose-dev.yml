@@ -16,20 +16,21 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${POSTGRES_DB:-stockmanager} -h localhost"]
+      test: [ "CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres} -d ${POSTGRES_DB:-stockmanager} -h localhost" ]
       interval: 10s
       timeout: 5s
       retries: 5
     networks:
       - db_network
-    restart:
-      always
+    restart: always
 
   app:
     container_name: stockmanager-api
     build:
       context: .
       dockerfile: Dockerfile.dev
+    entrypoint: [ "/bin/bash", "/app/entrypoint.sh" ]
+    command: [ "tail", "-f", "/dev/null" ]
     depends_on:
       db:
         condition: service_healthy
@@ -49,6 +50,7 @@ services:
 
 volumes:
   postgres_data:
+
 
 networks:
   db_network:
