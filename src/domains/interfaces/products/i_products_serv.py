@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
+from src.application.dtos import ProductCreateDTO, ProductUpdateDTO
 from src.domains.entities.products import ProductEntity
 
 
-class IProductsRepo(ABC):
+class IProductsService(ABC):
     @abstractmethod
     def get_all_products(self) -> list[ProductEntity]:
         pass
@@ -18,12 +19,12 @@ class IProductsRepo(ABC):
         pass
 
     @abstractmethod
-    def create_product(self, product_entity: ProductEntity) -> ProductEntity:
+    def create_product(self, product_data: ProductCreateDTO) -> ProductEntity:
         pass
 
     @abstractmethod
     def update_product(
-        self, product_id: UUID, product_entity: ProductEntity
+        self, product_id: UUID, product_data: ProductUpdateDTO
     ) -> ProductEntity:
         pass
 
