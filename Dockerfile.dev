@@ -1,0 +1,29 @@
+FROM python:3.12-slim-bookworm AS base
+
+WORKDIR /app
+
+# instalando dependências
+RUN apt-get update && apt-get install -y \
+    git \
+    libaio1 \
+    libnsl2 \
+    && rm -rf /var/lib/apt/lists/*
+
+# copiando o uv para o estágio final
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+# copia os arquivos do projeto para o container
+COPY . .
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/app/.venv/bin:$PATH"
+
+# converte line endings do Windows (CRLF) para Unix (LF) e garante permissão de execução
+RUN chmod +x /app/entrypoint.sh
+
+# usa caminho absoluto para evitar problemas de permissão
+ENTRYPOINT ["/app/entrypoint.sh"]
+
+# inicia o container de desenvolvimento
+CMD ["tail", "-f", "/dev/null"]
