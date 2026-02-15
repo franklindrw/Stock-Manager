@@ -2,6 +2,7 @@ from uuid import UUID
 
 from src.application.dtos import ProductCreateDTO, ProductUpdateDTO
 from src.domains.entities.products import ProductEntity
+from src.domains.exceptions import ProductNotFoundError
 from src.domains.interfaces.products import IProductsRepo, IProductsService
 
 
@@ -16,7 +17,7 @@ class ProductsService(IProductsService):
         product = self.repository.get_product_by_id(product_id)
 
         if not product:
-            raise ValueError("Produto não encontrado")
+            raise ProductNotFoundError(product_id)
 
         return product
 
@@ -29,7 +30,7 @@ class ProductsService(IProductsService):
         product = self.repository.get_product_by_id(product_id)
 
         if not product:
-            raise ValueError("Produto não encontrado")
+            raise ProductNotFoundError(product_id)
 
         update_dict = product_data.model_dump(exclude_unset=True)
 
@@ -39,4 +40,9 @@ class ProductsService(IProductsService):
         return self.repository.update_product(product_id, product)
 
     def delete_product(self, product_id: UUID) -> None:
+        product = self.repository.get_product_by_id(product_id)
+
+        if not product:
+            raise ProductNotFoundError(product_id)
+
         self.repository.delete_product(product_id)
