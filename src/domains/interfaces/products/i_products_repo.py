@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from uuid import UUID
 
 from src.domains.entities.products import ProductEntity
 
@@ -9,7 +10,7 @@ class IProductsRepo(ABC):
         pass
 
     @abstractmethod
-    def get_product_by_id(self, product_id) -> ProductEntity:
+    def get_product_by_id(self, product_id: UUID) -> ProductEntity:
         pass
 
     @abstractmethod
@@ -18,10 +19,10 @@ class IProductsRepo(ABC):
 
     @abstractmethod
     def update_product(
-        self, product_id, product_entity: ProductEntity
+        self, product_id: UUID, product_entity: ProductEntity
     ) -> ProductEntity:
         pass
 
     @abstractmethod
-    def delete_product(self, product_id) -> None:
+    def delete_product(self, product_id: UUID) -> None:
         pass
