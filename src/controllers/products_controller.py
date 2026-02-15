@@ -45,6 +45,14 @@ def get_product(
     return service.get_product_by_id(product_id)
 
 
+@router.get("/sku/{sku}", response_model=ProductResponseDTO)
+def get_product_by_sku(
+    sku: str,
+    service: Annotated[ProductsService, Depends(get_products_service)],
+):
+    return service.get_product_by_sku(sku)
+
+
 @router.post("", response_model=ProductResponseDTO, status_code=201)
 def create_product(
     product_data: ProductCreateDTO,

@@ -21,6 +21,14 @@ class AlchemyProductsRepo(IProductsRepo):
         product = self.session.get(ProductsModel, product_id)
         return self._to_entity(product) if product else None
 
+    def get_product_by_sku(self, sku: str) -> ProductEntity:
+        product = (
+            self.session.execute(select(ProductsModel).where(ProductsModel.sku == sku))
+            .scalars()
+            .first()
+        )
+        return self._to_entity(product) if product else None
+
     def create_product(self, product_entity: ProductEntity) -> ProductEntity:
         product_model = ProductsModel(
             sku=product_entity.sku,

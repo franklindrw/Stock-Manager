@@ -14,6 +14,10 @@ class IProductsRepo(ABC):
         pass
 
     @abstractmethod
+    def get_product_by_sku(self, sku: str) -> ProductEntity:
+        pass
+
+    @abstractmethod
     def create_product(self, product_entity: ProductEntity) -> ProductEntity:
         pass
 
