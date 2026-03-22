@@ -5,9 +5,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from src.application.dtos import ProductCreateDTO, ProductResponseDTO, ProductUpdateDTO
-from src.application.services.products_serv import ProductsService
+from src.application.services import ProductsService
 from src.infra.database import DBConnection
-from src.infra.repositories.alchemy_products_repo import AlchemyProductsRepo
+from src.infra.repositories import AlchemyProductsRepo
 
 router = APIRouter()
 
@@ -19,11 +19,13 @@ def get_db_session():
         yield db.session
 
 
+# Monta o repository
 def get_products_repository(session: Annotated[Session, Depends(get_db_session)]):
     """Retorna uma instância do repositório de produtos"""
     return AlchemyProductsRepo(session)
 
 
+# Monta o servico
 def get_products_service(
     repository: Annotated[AlchemyProductsRepo, Depends(get_products_repository)],
 ):

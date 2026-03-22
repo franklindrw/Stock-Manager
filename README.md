@@ -5,7 +5,7 @@ API de serviço para controle de Estoque com base nos estudos do curso Post-tech
 | :placard: Vitrine.Dev |                                |
 | --------------------- | ------------------------------ |
 | :sparkles: Nome       | **Stock Manager API**          |
-| :label: Tecnologias   | Python, Postgress, Docker, k8s |
+| :label: Tecnologias   | Python, Postgress, Docker      |
 
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
 
