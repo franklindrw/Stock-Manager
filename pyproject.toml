@@ -1,0 +1,31 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+
+dependencies = [
+    "alembic>=1.18.4",
+    "fastapi[standard]>=0.129.0",
+    "psycopg[binary]>=3.3.2",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.12.0",
+    "sqlalchemy>=2.0.46",
+]
+
+[tool.ruff]
+# Configurações globais do Ruff (Shared)
+line-length = 88
+target-version = "py312" # Ajuste para sua versão do Python
+exclude = [".git", ".venv", "__pycache__", "build", "dist"]
+
+[tool.ruff.lint]
+# Regras de Linting (Onde 'select' deve morar agora)
+select = ["E", "F", "I", "N", "B"] # Erros, Pyflakes, Isort, Naming, Bugbear
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+
+[tool.ruff.lint.isort]
+section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
